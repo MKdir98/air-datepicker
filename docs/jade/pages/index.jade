@@ -124,12 +124,12 @@ block content
                 script.
                     $('#minMaxExample').datepicker({
                         language: 'en',
-                        minDate: new $.fn.datepicker.PersianDate() // Now can select only dates, which goes after today
+                        minDate: new JalaliDate() // Now can select only dates, which goes after today
                     })
             +example-code('js').
                 $('#minMaxExample').datepicker({
                     language: 'en',
-                    minDate: new $.fn.datepicker.PersianDate() // Now can select only dates, which goes after today
+                    minDate: new JalaliDate() // Now can select only dates, which goes after today
                 })
 
         h3#example-range Range of dates
@@ -238,8 +238,8 @@ block content
                             $('p', $content).html(content)
                         }
                     })
-                    var currentDate = new $.fn.datepicker.PersianDate();
-                    $picker.data('datepicker').selectDate(new $.fn.datepicker.PersianDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
+                    var currentDate = new JalaliDate();
+                    $picker.data('datepicker').selectDate(new JalaliDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
             +example-code('js')
                 :code
                     var eventDates = [1, 10, 12, 22],
@@ -271,8 +271,8 @@ block content
                     })
 
                     // Select initial date from `eventDates`
-                    var currentDate = currentDate = new $.fn.datepicker.PersianDate();
-                    $picker.data('datepicker').selectDate(new $.fn.datepicker.PersianDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
+                    var currentDate = currentDate = new JalaliDate();
+                    $picker.data('datepicker').selectDate(new JalaliDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
 
         h3#example-show-hide Showing and hiding calendar
         p For adding some actions while datepicker is showing or hiding, use
@@ -388,7 +388,7 @@ block content
                 input(type='text')#timepicker-actions-exmpl
                 script.
                     // Create start date
-                    var start = new $.fn.datepicker.PersianDate(),
+                    var start = new JalaliDate(),
                             prevDay,
                             startHours = 9;
 
@@ -437,7 +437,7 @@ block content
                     <input type='text' id='timepicker-actions-exmpl' />
                     <script>
                         // Create start date
-                        var start = new $.fn.datepicker.PersianDate(),
+                        var start = new JalaliDate(),
                             prevDay,
                             startHours = 9;
 
@@ -545,7 +545,7 @@ block content
                 | If object is passed, then data will be taken from this object directly.
             p If some fields are missing, they will be taken from default localization object ('Russian').
         .param
-            +param-header('startDate', 'Date', 'new $.fn.datepicker.PersianDate()')
+            +param-header('startDate', 'Date', 'new JalaliDate()')
             p This date will be shown at first initialization.
         .param
             +param-header('firstDay', 'number', '""')
@@ -719,7 +719,7 @@ block content
             +example-code('js').
                 // Select today
                 $('.datepicker').datepicker({
-                    todayButton: new $.fn.datepicker.PersianDate()
+                    todayButton: new JalaliDate()
                 })
         .param
             +param-header('clearButton', 'boolean', 'false')
@@ -1002,11 +1002,11 @@ block content
             +example-code('js').
                 var datepicker = $('#my-elem').datepicker().data('datepicker');
                 // Single parameter update
-                datepicker.update('minDate', new $.fn.datepicker.PersianDate())
+                datepicker.update('minDate', new JalaliDate())
                 // Multiple parameters
                 datepicker.update({
                     position: "top right",
-                    maxDate: new $.fn.datepicker.PersianDate(),
+                    maxDate: new JalaliDate(),
                     todayButton: true
                 })
         .param
@@ -1020,7 +1020,7 @@ block content
                 | Sets new viewing date for datepicker, must pass a JavaScript Date object
                 +example-inline('Date()')
             +example-code('js').
-                datepicker.date = new $.fn.datepicker.PersianDate();
+                datepicker.date = new JalaliDate();
 
         .param
             +param-header('$el')
