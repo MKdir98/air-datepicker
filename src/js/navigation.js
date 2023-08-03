@@ -89,27 +89,27 @@
 
             switch (this.d.view) {
                 case 'days':
-                    if (!this.d._isInRange(new Date(y, m-1, 1), 'month')) {
+                    if (!this.d._isInRange(new JalaliDate(y, m-1, 1), 'month')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(y, m+1, 1), 'month')) {
+                    if (!this.d._isInRange(new JalaliDate(y, m+1, 1), 'month')) {
                         this._disableNav('next')
                     }
                     break;
                 case 'months':
-                    if (!this.d._isInRange(new Date(y-1, m, d), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(y-1, m, d), 'year')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(y+1, m, d), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(y+1, m, d), 'year')) {
                         this._disableNav('next')
                     }
                     break;
                 case 'years':
                     var decade = dp.getDecade(this.d.date);
-                    if (!this.d._isInRange(new Date(decade[0] - 1, 0, 1), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(decade[0] - 1, 0, 1), 'year')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(decade[1] + 1, 0, 1), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(decade[1] + 1, 0, 1), 'year')) {
                         this._disableNav('next')
                     }
                     break;

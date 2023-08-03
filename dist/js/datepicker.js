@@ -1,4 +1,72 @@
-;(function (window, $, undefined) { ;(function () {
+;(function (window, $, undefined) { class JalaliDate extends Date {
+    constructor(...args) {
+        super(...args);
+    }
+
+    toLocaleDateString = () => super.toLocaleDateString('fa-IR-u-nu-latn');
+    getParts = () => this.toLocaleDateString().split("/")
+    getJalaliFullYear = () => Number(this.getParts()[0]);
+    getJalaliMonth = () => Number(this.getParts()[1] - 1);
+    getJalaliDate = () => Number(this.getParts()[2]);
+    getJalaliDay = () => super.getDay() === 6 ? 0 : super.getDay() + 1
+}
+
+JalaliDateUtil = {
+    g_days_in_month: [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31],
+    j_days_in_month: [31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29]
+};
+
+JalaliDateUtil.jalaliToGregorian = function(j_y, j_m, j_d) {
+    j_y = parseInt(j_y);
+    j_m = parseInt(j_m);
+    j_d = parseInt(j_d);
+    var jy = j_y - 979;
+    var jm = j_m - 1;
+    var jd = j_d - 1;
+
+    var j_day_no = 365 * jy + parseInt(jy / 33) * 8 + parseInt((jy % 33 + 3) / 4);
+    for (var i = 0; i < jm; ++i) j_day_no += JalaliDateUtil.j_days_in_month[i];
+
+    j_day_no += jd;
+
+    var g_day_no = j_day_no + 79;
+
+    var gy = 1600 + 400 * parseInt(g_day_no / 146097); /* 146097 = 365*400 + 400/4 - 400/100 + 400/400 */
+    g_day_no = g_day_no % 146097;
+
+    var leap = true;
+    if (g_day_no >= 36525) /* 36525 = 365*100 + 100/4 */
+    {
+        g_day_no--;
+        gy += 100 * parseInt(g_day_no / 36524); /* 36524 = 365*100 + 100/4 - 100/100 */
+        g_day_no = g_day_no % 36524;
+
+        if (g_day_no >= 365) g_day_no++;
+        else leap = false;
+    }
+
+    gy += 4 * parseInt(g_day_no / 1461); /* 1461 = 365*4 + 4/4 */
+    g_day_no %= 1461;
+
+    if (g_day_no >= 366) {
+        leap = false;
+
+        g_day_no--;
+        gy += parseInt(g_day_no / 365);
+        g_day_no = g_day_no % 365;
+    }
+
+    for (var i = 0; g_day_no >= JalaliDateUtil.g_days_in_month[i] + (i == 1 && leap); i++)
+    g_day_no -= JalaliDateUtil.g_days_in_month[i] + (i == 1 && leap);
+    var gm = i + 1;
+    var gd = g_day_no + 1;
+
+    gm = gm < 10 ? "0" + gm : gm;
+    gd = gd < 10 ? "0" + gd : gd;
+
+    return [gy, gm, gd];
+}
+;(function () {
     var VERSION = '2.2.3',
         pluginName = 'datepicker',
         autoInitSelector = '.datepicker-here',
@@ -14,7 +82,7 @@
             classes: '',
             inline: false,
             language: 'ru',
-            startDate: new Date(),
+            startDate: new JalaliDate(),
             firstDay: '',
             weekends: [6, 0],
             dateFormat: '',
@@ -114,7 +182,7 @@
         }
 
         if (!this.opts.startDate) {
-            this.opts.startDate = new Date();
+            this.opts.startDate = new JalaliDate();
         }
 
         if (this.el.nodeName == 'INPUT') {
@@ -195,8 +263,8 @@
         },
 
         _createShortCuts: function () {
-            this.minDate = this.opts.minDate ? this.opts.minDate : new Date(-8639999913600000);
-            this.maxDate = this.opts.maxDate ? this.opts.maxDate : new Date(8639999913600000);
+            this.minDate = this.opts.minDate ? this.opts.minDate : new JalaliDate(-8639999913600000);
+            this.maxDate = this.opts.maxDate ? this.opts.maxDate : new JalaliDate(8639999913600000);
         },
 
         _bindEvents : function () {
@@ -300,7 +368,7 @@
                 parsedSelected = datepicker.getParsedDate(selectedDates[0]),
                 formattedDates,
                 _this = this,
-                dates = new Date(
+                dates = new JalaliDate(
                     parsedSelected.year,
                     parsedSelected.month,
                     parsedSelected.date,
@@ -317,7 +385,7 @@
             if (this.opts.multipleDates || this.opts.range) {
                 dates = selectedDates.map(function(date) {
                     var parsedDate = datepicker.getParsedDate(date);
-                    return new Date(
+                    return new JalaliDate(
                         parsedDate.year,
                         parsedDate.month,
                         parsedDate.date,
@@ -336,15 +404,15 @@
                 o = this.opts;
             switch (this.view) {
                 case 'days':
-                    this.date = new Date(d.year, d.month + 1, 1);
+                    this.date = new JalaliDate(d.year, d.month + 1, 1);
                     if (o.onChangeMonth) o.onChangeMonth(this.parsedDate.month, this.parsedDate.year);
                     break;
                 case 'months':
-                    this.date = new Date(d.year + 1, d.month, 1);
+                    this.date = new JalaliDate(d.year + 1, d.month, 1);
                     if (o.onChangeYear) o.onChangeYear(this.parsedDate.year);
                     break;
                 case 'years':
-                    this.date = new Date(d.year + 10, 0, 1);
+                    this.date = new JalaliDate(d.year + 10, 0, 1);
                     if (o.onChangeDecade) o.onChangeDecade(this.curDecade);
                     break;
             }
@@ -355,15 +423,15 @@
                 o = this.opts;
             switch (this.view) {
                 case 'days':
-                    this.date = new Date(d.year, d.month - 1, 1);
+                    this.date = new JalaliDate(d.year, d.month - 1, 1);
                     if (o.onChangeMonth) o.onChangeMonth(this.parsedDate.month, this.parsedDate.year);
                     break;
                 case 'months':
-                    this.date = new Date(d.year - 1, d.month, 1);
+                    this.date = new JalaliDate(d.year - 1, d.month, 1);
                     if (o.onChangeYear) o.onChangeYear(this.parsedDate.year);
                     break;
                 case 'years':
-                    this.date = new Date(d.year - 10, 0, 1);
+                    this.date = new JalaliDate(d.year - 10, 0, 1);
                     if (o.onChangeDecade) o.onChangeDecade(this.curDecade);
                     break;
             }
@@ -399,21 +467,21 @@
                 case /AA/.test(result):
                     result = replacer(result, boundary('AA'), dayPeriod.toUpperCase());
                 case /dd/.test(result):
-                    result = replacer(result, boundary('dd'), d.fullDate);
+                    result = replacer(result, boundary('dd'), d.jalaliFullDate);
                 case /d/.test(result):
-                    result = replacer(result, boundary('d'), d.date);
+                    result = replacer(result, boundary('d'), d.jalaliDate);
                 case /DD/.test(result):
-                    result = replacer(result, boundary('DD'), locale.days[d.day]);
+                    result = replacer(result, boundary('DD'), locale.days[d.jalaliDay]);
                 case /D/.test(result):
-                    result = replacer(result, boundary('D'), locale.daysShort[d.day]);
+                    result = replacer(result, boundary('D'), locale.daysShort[d.jalaliDay]);
                 case /mm/.test(result):
-                    result = replacer(result, boundary('mm'), d.fullMonth);
+                    result = replacer(result, boundary('mm'), d.jalaliFullMonth);
                 case /m/.test(result):
-                    result = replacer(result, boundary('m'), d.month + 1);
+                    result = replacer(result, boundary('m'), d.jalaliMonth + 1);
                 case /MM/.test(result):
-                    result = replacer(result, boundary('MM'), this.loc.months[d.month]);
+                    result = replacer(result, boundary('MM'), this.loc.months[d.jalaliMonth]);
                 case /M/.test(result):
-                    result = replacer(result, boundary('M'), locale.monthsShort[d.month]);
+                    result = replacer(result, boundary('M'), locale.monthsShort[d.jalaliMonth]);
                 case /ss/.test(result):
                     result = replacer(result, boundary('ss'), d.fullSeconds);
                 case /s/.test(result):
@@ -427,13 +495,13 @@
                 case /h/.test(result):
                     result = replacer(result, boundary('h'), hours);
                 case /yyyy/.test(result):
-                    result = replacer(result, boundary('yyyy'), d.year);
+                    result = replacer(result, boundary('yyyy'), d.jalaliYear);
                 case /yyyy1/.test(result):
                     result = replacer(result, boundary('yyyy1'), decade[0]);
                 case /yyyy2/.test(result):
                     result = replacer(result, boundary('yyyy2'), decade[1]);
                 case /yy/.test(result):
-                    result = replacer(result, boundary('yy'), d.year.toString().slice(-2));
+                    result = replacer(result, boundary('yy'), d.jalaliYear.toString().slice(-2));
             }
 
             return result;
@@ -490,13 +558,13 @@
 
             if (_this.view == 'days') {
                 if (date.getMonth() != d.month && opts.moveToOtherMonthsOnSelect) {
-                    newDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                    newDate = new JalaliDate(date.getFullYear(), date.getMonth(), 1);
                 }
             }
 
             if (_this.view == 'years') {
                 if (date.getFullYear() != d.year && opts.moveToOtherYearsOnSelect) {
-                    newDate = new Date(date.getFullYear(), 0, 1);
+                    newDate = new JalaliDate(date.getFullYear(), 0, 1);
                 }
             }
 
@@ -590,7 +658,7 @@
             this.silent = true;
             this.view = this.opts.minView;
             this.silent = false;
-            this.date = new Date();
+            this.date = new JalaliDate();
 
             if (this.opts.todayButton instanceof Date) {
                 this.selectDate(this.opts.todayButton)
@@ -721,8 +789,8 @@
                 d = datepicker.getParsedDate(date),
                 min = datepicker.getParsedDate(this.minDate),
                 max = datepicker.getParsedDate(this.maxDate),
-                dMinTime = new Date(d.year, d.month, min.date).getTime(),
-                dMaxTime = new Date(d.year, d.month, max.date).getTime(),
+                dMinTime = new JalaliDate(d.year, d.month, min.date).getTime(),
+                dMaxTime = new JalaliDate(d.year, d.month, max.date).getTime(),
                 types = {
                     day: time >= this.minTime && time <= this.maxTime,
                     month: dMinTime >= this.minTime && dMaxTime <= this.maxTime,
@@ -748,7 +816,7 @@
                 month = cell.data('month') == undefined ? curDate.month : cell.data('month'),
                 date = cell.data('date') || 1;
 
-            return new Date(year, month, date);
+            return new JalaliDate(year, month, date);
         },
 
         _setPositionClasses: function (pos) {
@@ -873,7 +941,7 @@
             if (nextView < 0) nextView = 0;
 
             this.silent = true;
-            this.date = new Date(date.getFullYear(), date.getMonth(), 1);
+            this.date = new JalaliDate(date.getFullYear(), date.getMonth(), 1);
             this.silent = false;
             this.view = this.viewIndexes[nextView];
 
@@ -928,8 +996,8 @@
                     break;
             }
 
-            totalDaysInNextMonth = datepicker.getDaysCount(new Date(y,m));
-            newDate = new Date(y,m,d);
+            totalDaysInNextMonth = datepicker.getDaysCount(new JalaliDate(y,m));
+            newDate = new JalaliDate(y,m,d);
 
             // If next month has less days than current, set date to total days in that month
             if (totalDaysInNextMonth < d) d = totalDaysInNextMonth;
@@ -1029,7 +1097,7 @@
                     break;
             }
 
-            var nd = new Date(y,m,d);
+            var nd = new JalaliDate(y,m,d);
             if (nd.getTime() < this.minTime) {
                 nd = this.minDate;
             } else if (nd.getTime() > this.maxTime) {
@@ -1047,13 +1115,13 @@
             if (!focused) {
                 switch (this.view) {
                     case 'days':
-                        focused = new Date(d.year, d.month, new Date().getDate());
+                        focused = new JalaliDate(d.year, d.month, new JalaliDate().getDate());
                         break;
                     case 'months':
-                        focused = new Date(d.year, d.month, 1);
+                        focused = new JalaliDate(d.year, d.month, 1);
                         break;
                     case 'years':
-                        focused = new Date(d.year, 0, 1);
+                        focused = new JalaliDate(d.year, 0, 1);
                         break;
                 }
             }
@@ -1260,7 +1328,7 @@
         },
 
         _onTimeChange: function (e, h, m, s) {
-            var date = new Date(),
+            var date = new JalaliDate(),
                 selectedDates = this.selectedDates,
                 selected = false;
 
@@ -1380,12 +1448,12 @@
 
         get minTime() {
             var min = datepicker.getParsedDate(this.minDate);
-            return new Date(min.year, min.month, min.date).getTime()
+            return new JalaliDate(min.year, min.month, min.date).getTime()
         },
 
         get maxTime() {
             var max = datepicker.getParsedDate(this.maxDate);
-            return new Date(max.year, max.month, max.date).getTime()
+            return new JalaliDate(max.year, max.month, max.date).getTime()
         },
 
         get curDecade() {
@@ -1397,7 +1465,13 @@
     // -------------------------------------------------
 
     datepicker.getDaysCount = function (date) {
-        return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+        if(date.getJalaliMonth() < 7) {
+            return 31;
+        } else if(date.getJalaliMonth() < 12) {
+            return 30;
+        } else {
+            return 29;
+        }
     };
 
     datepicker.getParsedDate = function (date) {
@@ -1413,7 +1487,13 @@
             minutes: date.getMinutes(),
             fullMinutes:  date.getMinutes() < 10 ? '0' + date.getMinutes() :  date.getMinutes(),
             seconds: date.getSeconds(),
-            fullSeconds:  date.getSeconds() < 10 ? '0' + date.getSeconds() :  date.getSeconds()
+            fullSeconds:  date.getSeconds() < 10 ? '0' + date.getSeconds() :  date.getSeconds(),
+            jalaliYear: date.getJalaliFullYear(),
+            jalaliMonth: date.getJalaliMonth(),
+            jalaliFullMonth: (date.getJalaliMonth() + 1) < 10 ? '0' + (date.getJalaliMonth() + 1) : date.getJalaliMonth() + 1,
+            jalaliDate: date.getJalaliDate(),
+            jalaliFullDate: date.getJalaliDate() < 10 ? '0' + date.getJalaliDate() : date.getJalaliDate(),
+            jalaliDay: date.getJalaliDay()
         }
     };
 
@@ -1467,7 +1547,7 @@
     datepicker.resetTime = function (date) {
         if (typeof date != 'object') return;
         date = datepicker.getParsedDate(date);
-        return new Date(date.year, date.month, date.date)
+        return new JalaliDate(date.year, date.month, date.date)
     };
 
     $.fn.datepicker = function ( options ) {
@@ -1569,19 +1649,19 @@
 
         _getCellContents: function (date, type) {
             var classes = "datepicker--cell datepicker--cell-" + type,
-                currentDate = new Date(),
+                currentDate = new JalaliDate(),
                 parent = this.d,
                 minRange = dp.resetTime(parent.minRange),
                 maxRange = dp.resetTime(parent.maxRange),
                 opts = parent.opts,
                 d = dp.getParsedDate(date),
                 render = {},
-                html = d.date;
+                html = d.jalaliDate;
 
             switch (type) {
                 case 'day':
                     if (parent.isWeekend(d.day)) classes += " -weekend-";
-                    if (d.month != this.d.parsedDate.month) {
+                    if (d.jalaliMonth != this.d.parsedDate.jalaliMonth) {
                         classes += " -other-month-";
                         if (!opts.selectOtherMonths) {
                             classes += " -disabled-";
@@ -1656,24 +1736,26 @@
          * @private
          */
         _getDaysHtml: function (date) {
-            var totalMonthDays = dp.getDaysCount(date),
-                firstMonthDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay(),
-                lastMonthDay = new Date(date.getFullYear(), date.getMonth(), totalMonthDays).getDay(),
+            var totalMonthDays = dp.getDaysCount(date);
+            jd = JalaliDateUtil.jalaliToGregorian(date.getJalaliFullYear(), date.getJalaliMonth() + 1, 1);
+            jdEnd = JalaliDateUtil.jalaliToGregorian(date.getJalaliFullYear(), date.getJalaliMonth() + 1, totalMonthDays);
+            var firstMonthDay = new JalaliDate(jd[0], jd[1] - 1, jd[2]).getDay(),
+            lastMonthDay = new JalaliDate(jdEnd[0], jdEnd[1] - 1, jdEnd[2]).getDay(),
                 daysFromPevMonth = firstMonthDay - this.d.loc.firstDay,
                 daysFromNextMonth = 6 - lastMonthDay + this.d.loc.firstDay;
-
-            daysFromPevMonth = daysFromPevMonth < 0 ? daysFromPevMonth + 7 : daysFromPevMonth;
+                
+                daysFromPevMonth = daysFromPevMonth < 0 ? daysFromPevMonth + 7 : daysFromPevMonth;
             daysFromNextMonth = daysFromNextMonth > 6 ? daysFromNextMonth - 7 : daysFromNextMonth;
-
+            
             var startDayIndex = -daysFromPevMonth + 1,
-                m, y,
-                html = '';
-
+            m, y,
+            html = '';
+            
             for (var i = startDayIndex, max = totalMonthDays + daysFromNextMonth; i <= max; i++) {
-                y = date.getFullYear();
-                m = date.getMonth();
-
-                html += this._getDayHtml(new Date(y, m, i))
+                jalaliMonth = date.getJalaliMonth();
+                jalaliyear = date.getJalaliFullYear();
+                iJd = JalaliDateUtil.jalaliToGregorian(jalaliyear, jalaliMonth + 1, i);
+                html += this._getDayHtml(new JalaliDate(iJd[0], iJd[1] - 1, iJd[2]))
             }
 
             return html;
@@ -1700,7 +1782,7 @@
                 i = 0;
 
             while(i < 12) {
-                html += this._getMonthHtml(new Date(d.year, i));
+                html += this._getMonthHtml(new JalaliDate(d.year, i));
                 i++
             }
 
@@ -1721,7 +1803,7 @@
                 i = firstYear;
 
             for (i; i <= decade[1] + 1; i++) {
-                html += this._getYearHtml(new Date(i , 0));
+                html += this._getYearHtml(new JalaliDate(i , 0));
             }
 
             return html;
@@ -1793,11 +1875,11 @@
                 dp = this.d;
             // Change view if min view does not reach yet
             if (dp.view != this.opts.minView) {
-                dp.down(new Date(year, month, date));
+                dp.down(new JalaliDate(year, month, date));
                 return;
             }
             // Select date if min view is reached
-            var selectedDate = new Date(year, month, date),
+            var selectedDate = new JalaliDate(year, month, date),
                 alreadySelected = this.d._isSelected(selectedDate, this.d.cellType);
 
             if (!alreadySelected) {
@@ -1910,27 +1992,27 @@
 
             switch (this.d.view) {
                 case 'days':
-                    if (!this.d._isInRange(new Date(y, m-1, 1), 'month')) {
+                    if (!this.d._isInRange(new JalaliDate(y, m-1, 1), 'month')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(y, m+1, 1), 'month')) {
+                    if (!this.d._isInRange(new JalaliDate(y, m+1, 1), 'month')) {
                         this._disableNav('next')
                     }
                     break;
                 case 'months':
-                    if (!this.d._isInRange(new Date(y-1, m, d), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(y-1, m, d), 'year')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(y+1, m, d), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(y+1, m, d), 'year')) {
                         this._disableNav('next')
                     }
                     break;
                 case 'years':
                     var decade = dp.getDecade(this.d.date);
-                    if (!this.d._isInRange(new Date(decade[0] - 1, 0, 1), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(decade[0] - 1, 0, 1), 'year')) {
                         this._disableNav('prev')
                     }
-                    if (!this.d._isInRange(new Date(decade[1] + 1, 0, 1), 'year')) {
+                    if (!this.d._isInRange(new JalaliDate(decade[1] + 1, 0, 1), 'year')) {
                         this._disableNav('next')
                     }
                     break;

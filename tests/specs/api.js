@@ -28,7 +28,7 @@ describe('API', function () {
         it('should select passed date', function () {
             dp = $input.datepicker().data('datepicker');
 
-            var date = new Date();
+            var date = new $.fn.datepicker.PersianDate();
             
             dp.selectDate(date);
 
@@ -40,8 +40,8 @@ describe('API', function () {
                 multipleDates: true
             }).data('datepicker');
 
-            var date = new Date(2016, 4, 16),
-                date2 = new Date(2016, 4, 18);
+            var date = new $.fn.datepicker.PersianDate(2016, 4, 16),
+                date2 = new $.fn.datepicker.PersianDate(2016, 4, 18);
 
             dp.selectDate(date);
             dp.selectDate(date2);
@@ -53,8 +53,8 @@ describe('API', function () {
                 range: true
             }).data('datepicker');
 
-            var date = new Date(2016, 4, 18),
-                date2 = new Date(2016, 4, 16);
+            var date = new $.fn.datepicker.PersianDate(2016, 4, 18),
+                date2 = new $.fn.datepicker.PersianDate(2016, 4, 16);
 
             dp.selectDate(date);
             dp.selectDate(date2);

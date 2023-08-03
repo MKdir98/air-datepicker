@@ -128,12 +128,12 @@ block content
                 script.
                     $('#minMaxExample').datepicker({
                         // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня.
-                        minDate: new Date()
+                        minDate: new $.fn.datepicker.PersianDate()
                     })
             +example-code('js').
                 $('#minMaxExample').datepicker({
                     // Можно выбрать тольо даты, идущие за сегодняшним днем, включая сегодня
-                    minDate: new Date()
+                    minDate: new $.fn.datepicker.PersianDate()
                 })
 
         h3#example-range Диапозон дат
@@ -242,8 +242,8 @@ block content
                         }
                     })
 
-                    var currentDate = new Date();
-                    $picker.data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), 10))
+                    var currentDate = new $.fn.datepicker.PersianDate();
+                    $picker.data('datepicker').selectDate(new $.fn.datepicker.PersianDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
 
             +example-code('js')
                 :code
@@ -278,8 +278,8 @@ block content
                     })
 
                     // Сразу выберем какую-ниудь дату из `eventDates`
-                    var currentDate = currentDate = new Date();
-                    $picker.data('datepicker').selectDate(new Date(currentDate.getFullYear(), currentDate.getMonth(), 10))
+                    var currentDate = currentDate = new $.fn.datepicker.PersianDate();
+                    $picker.data('datepicker').selectDate(new $.fn.datepicker.PersianDate(currentDate.getFullYear(), currentDate.getMonth(), 10))
 
         h3#example-show-hide Появление и скрытие календаря
         p Для добавления каких-либо действий с начала анимации или по ее окончанию, используйте опции
@@ -391,7 +391,7 @@ block content
                 input(type='text')#timepicker-actions-exmpl
                 script.
                     // Зададим стартовую дату
-                    var start = new Date(),
+                    var start = new $.fn.datepicker.PersianDate(),
                             prevDay,
                             startHours = 9;
 
@@ -440,7 +440,7 @@ block content
                     <input type='text' id='timepicker-actions-exmpl' />
                     <script>
                         // Зададим стартовую дату
-                        var start = new Date(),
+                        var start = new $.fn.datepicker.PersianDate(),
                             prevDay,
                             startHours = 9;
 
@@ -551,7 +551,7 @@ block content
             p Если в объекте локализации не будет хватать каких то полей, то они будут взяты из языка по умолчанию.
 
         .param
-            +param-header('startDate', 'Date', 'new Date()')
+            +param-header('startDate', 'Date', 'new $.fn.datepicker.PersianDate()')
             p Дата, которая будет отображаться при инициализации календаря.
 
         .param
@@ -742,7 +742,7 @@ block content
             +example-code('js').
                 // Выбор сегодняшнего дня
                 $('.datepicker').datepicker({
-                    todayButton: new Date()
+                    todayButton: new $.fn.datepicker.PersianDate()
                 })
 
         .param
@@ -1048,12 +1048,12 @@ block content
                 var datepicker = $('#my-elem').datepicker().data('datepicker');
 
                 // Обновление одного параметра
-                datepicker.update('minDate', new Date())
+                datepicker.update('minDate', new $.fn.datepicker.PersianDate())
 
                 // Обновление нескольких параметров
                 datepicker.update({
                     position: "top right",
-                    maxDate: new Date(),
+                    maxDate: new $.fn.datepicker.PersianDate(),
                     todayButton: true
                 })
 
@@ -1070,7 +1070,7 @@ block content
                 +example-inline('Date()')
 
             +example-code('js').
-                datepicker.date = new Date();
+                datepicker.date = new $.fn.datepicker.PersianDate();
 
         .param
             +param-header('$el')

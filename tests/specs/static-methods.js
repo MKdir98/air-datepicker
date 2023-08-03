@@ -5,18 +5,18 @@ var assert = chai.assert,
 describe('Datepicker', function () {
     describe('getDaysCount', function () {
         it('should return 31 days in December', function () {
-            assert.equal(plugin.getDaysCount(new Date(2015, 11)), 31)
+            assert.equal(plugin.getDaysCount(new $.fn.datepicker.PersianDate(2015, 11)), 31)
         });
         it('should return 30 days in September', function () {
-            assert.equal(plugin.getDaysCount(new Date(2015, 8)), 30)
+            assert.equal(plugin.getDaysCount(new $.fn.datepicker.PersianDate(2015, 8)), 30)
         });
         it('should return 28 days in February', function () {
-            assert.equal(plugin.getDaysCount(new Date(2015, 1)), 28)
+            assert.equal(plugin.getDaysCount(new $.fn.datepicker.PersianDate(2015, 1)), 28)
         })
     });
 
     describe('getParsedDate', function () {
-        var currentDate = new Date(),
+        var currentDate = new $.fn.datepicker.PersianDate(),
             date = plugin.getParsedDate(currentDate);
 
         it('should return object with detailed date fields', function () {
@@ -77,7 +77,7 @@ describe('Datepicker', function () {
 
     describe('getDecade', function () {
         it('should return array with first and last years in decade', function () {
-            var decade = plugin.getDecade(new Date(2015, 1));
+            var decade = plugin.getDecade(new $.fn.datepicker.PersianDate(2015, 1));
 
             expect(decade).to.be.an('array');
             assert.equal(decade[0], 2010)
@@ -93,10 +93,10 @@ describe('Datepicker', function () {
     })
 
     describe('isSame', function () {
-        var date1 = new Date(2015, 11, 14),
-            date2 = new Date(2015, 11, 14),
-            date3 = new Date(2015, 10, 14),
-            date4 = new Date(2016, 11, 14);
+        var date1 = new $.fn.datepicker.PersianDate(2015, 11, 14),
+            date2 = new $.fn.datepicker.PersianDate(2015, 11, 14),
+            date3 = new $.fn.datepicker.PersianDate(2015, 10, 14),
+            date4 = new $.fn.datepicker.PersianDate(2016, 11, 14);
 
         it('should return true if dates are equal', function () {
             assert(plugin.isSame(date1,date2))
@@ -120,12 +120,12 @@ describe('Datepicker', function () {
 
     describe('less(date1, date2)', function () {
         it('should return true if date2 less then date1', function () {
-            assert(plugin.less(new Date(2015, 11, 14), new Date(2015, 11, 13)))
+            assert(plugin.less(new $.fn.datepicker.PersianDate(2015, 11, 14), new $.fn.datepicker.PersianDate(2015, 11, 13)))
         })
     })
     describe('bigger(date1, date2)', function () {
         it('should return true if date2 bigger then date1', function () {
-            assert(plugin.bigger(new Date(2015, 11, 14), new Date(2015, 11, 15)))
+            assert(plugin.bigger(new $.fn.datepicker.PersianDate(2015, 11, 14), new $.fn.datepicker.PersianDate(2015, 11, 15)))
         })
     })
 });

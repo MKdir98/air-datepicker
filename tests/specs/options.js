@@ -76,7 +76,7 @@ describe('Options', function () {
     describe('startDate', function () {
         it('should change initial viewing date', function () {
             dp = $input.datepicker({
-                startDate: new Date(2014,11,12)
+                startDate: new $.fn.datepicker.PersianDate(2014,11,12)
             }).data('datepicker');
 
             expect(dp.$nav.text()).to.have.string('Декабрь');
@@ -121,7 +121,7 @@ describe('Options', function () {
     });
 
     describe('dateFormat', function () {
-        var date = new Date(2015, 6, 4, 11, 5),
+        var date = new $.fn.datepicker.PersianDate(2015, 6, 4, 11, 5),
             formats = {
                 '@': date.getTime(),
                 'aa': 'am',
@@ -162,7 +162,7 @@ describe('Options', function () {
                 language: 'de',
                 dateFormat: 'Month is MM'
             }).data('datepicker');
-            dp.selectDate(new Date(2016, 2, 1));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 2, 1));
             expect(dp.$el.val()).to.be.equal('Month is März');
         })
     });
@@ -179,7 +179,7 @@ describe('Options', function () {
 
     describe('altFieldFormat', function () {
         it('should define date format for alternative field', function () {
-            var date = new Date(2015, 11, 17);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 17);
 
             dp = $input.datepicker({
                 altField: '.alt-field',
@@ -192,7 +192,7 @@ describe('Options', function () {
         });
         
         it('should support 24 hour mode, even if main date format is in 12', function () {
-            var date = new Date(2015, 11, 17, 22, 47);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 17, 22, 47);
 
             dp = $input.datepicker({
                 timepicker: true,
@@ -207,7 +207,7 @@ describe('Options', function () {
         });
 
         it('should support 12 hour mode', function () {
-            var date = new Date(2015, 11, 17, 22, 47);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 17, 22, 47);
 
             dp = $input.datepicker({
                 timepicker: true,
@@ -224,7 +224,7 @@ describe('Options', function () {
 
     describe('toggleSelected', function () {
         it('when true, click on selected cells should remove selection', function () {
-            var date = new Date(2015, 11, 17);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 17);
 
             dp = $input.datepicker().data('datepicker');
 
@@ -235,7 +235,7 @@ describe('Options', function () {
         });
 
         it('when false, click on selected cell must do nothing', function () {
-            var date = new Date(2015, 11, 17);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 17);
 
             dp = $input.datepicker({
                 toggleSelected: false
@@ -252,57 +252,57 @@ describe('Options', function () {
         var year = 2015,
             month = 10,
             day = 18,
-            date = new Date(year, month, day),
+            date = new $.fn.datepicker.PersianDate(year, month, day),
             cases = [
                 {
                     it: '→: should focus next cell',
                     keys: [39],
-                    validDate: new Date(year, month, day + 1)
+                    validDate: new $.fn.datepicker.PersianDate(year, month, day + 1)
                 },
                 {
                     it: '←: should focus previous cell',
                     keys: [37],
-                    validDate: new Date(year, month, day - 1)
+                    validDate: new $.fn.datepicker.PersianDate(year, month, day - 1)
                 },
                 {
                     it: '↑: should focus +7 day cell',
                     keys: [40],
-                    validDate: new Date(year, month, day + 7)
+                    validDate: new $.fn.datepicker.PersianDate(year, month, day + 7)
                 },
                 {
                     it: '↓: should focus -7 day cell',
                     keys: [38],
-                    validDate: new Date(year, month, day - 7)
+                    validDate: new $.fn.datepicker.PersianDate(year, month, day - 7)
                 },
                 {
                     it: 'Ctrl + →: should focus next month',
                     keys: [17, 39],
-                    validDate: new Date(year, month + 1, day)
+                    validDate: new $.fn.datepicker.PersianDate(year, month + 1, day)
                 },
                 {
                     it: 'Ctrl + ←: should focus previous month',
                     keys: [17, 37],
-                    validDate: new Date(year, month - 1, day)
+                    validDate: new $.fn.datepicker.PersianDate(year, month - 1, day)
                 },
                 {
                     it: 'Shift + →: should focus next year',
                     keys: [16, 39],
-                    validDate: new Date(year + 1, month, day)
+                    validDate: new $.fn.datepicker.PersianDate(year + 1, month, day)
                 },
                 {
                     it: 'Shift + ←: should focus previous year',
                     keys: [16, 37],
-                    validDate: new Date(year - 1, month, day)
+                    validDate: new $.fn.datepicker.PersianDate(year - 1, month, day)
                 },
                 {
                     it: 'Alt + →: should focus on +10 year cell',
                     keys: [18, 39],
-                    validDate: new Date(year + 10, month, day)
+                    validDate: new $.fn.datepicker.PersianDate(year + 10, month, day)
                 },
                 {
                     it: 'Alt + ←: should focus on -10 year cell',
                     keys: [18, 37],
-                    validDate: new Date(year - 10, month, day)
+                    validDate: new $.fn.datepicker.PersianDate(year - 10, month, day)
                 },
                 {
                     it: 'Ctrl + Shift + ↑: should change view to months',
@@ -459,7 +459,7 @@ describe('Options', function () {
     });
 
     describe('showOtherMonths', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
 
         it('if `true` should show days from other months', function () {
             dp = $input.datepicker().data('datepicker');
@@ -482,7 +482,7 @@ describe('Options', function () {
     });
 
     describe('selectOtherMonths', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
 
         it('if `true` you can select cells from other months', function () {
             dp = $input.datepicker().data('datepicker');
@@ -505,7 +505,7 @@ describe('Options', function () {
     });
 
     describe('moveToOtherMonthsOnSelect', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
 
         it('if `true` datepicker will translate to other month if date from other month is selected', function () {
             dp = $input.datepicker().data('datepicker');
@@ -531,7 +531,7 @@ describe('Options', function () {
     });
 
     describe('showOtherYears', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
         it('if `true` should show years from other decades', function () {
             dp = $input.datepicker({
                 view: 'years'
@@ -559,7 +559,7 @@ describe('Options', function () {
     });
 
     describe('selectOtherYears', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
 
         it('if `true` you can select cells from other decades', function () {
             dp = $input.datepicker({
@@ -590,7 +590,7 @@ describe('Options', function () {
     });
 
     describe('moveToOtherYearsOnSelect', function () {
-        var date = new Date(2015, 11, 22);
+        var date = new $.fn.datepicker.PersianDate(2015, 11, 22);
 
         it('if `true` datepicker will translate to other decade if date from other decade is selected', function () {
             dp = $input.datepicker({
@@ -624,7 +624,7 @@ describe('Options', function () {
 
     describe('minDate', function () {
         it('should set minimum possible date to choose', function () {
-            var date = new Date(2015, 11, 30);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 30);
 
             dp = $input.datepicker({
                 minDate: date
@@ -640,7 +640,7 @@ describe('Options', function () {
 
     describe('maxDate', function () {
         it('should set maximum possible date to choose', function () {
-            var date = new Date(2015, 11, 30);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 30);
 
             dp = $input.datepicker({
                 maxDate: date
@@ -656,7 +656,7 @@ describe('Options', function () {
 
     describe('disableNavWhenOutOfRange', function () {
         it('if `true` then navigation buttons will be disabled if there is no more possible dates to select to in next or prev month', function () {
-            var date = new Date(2015, 11, 30);
+            var date = new $.fn.datepicker.PersianDate(2015, 11, 30);
 
             dp = $input.datepicker({
                 minDate: date,
@@ -677,9 +677,9 @@ describe('Options', function () {
                 multipleDates: true
             }).data('datepicker');
 
-            dp.selectDate(new Date(2016, 0, 7));
-            dp.selectDate(new Date(2016, 0, 8));
-            dp.selectDate(new Date(2016, 0, 9));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 7));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 8));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 9));
 
             expect(dp.selectedDates).to.have.length(3)
         });
@@ -689,11 +689,11 @@ describe('Options', function () {
                 multipleDates: 3
             }).data('datepicker');
 
-            dp.selectDate(new Date(2016, 0, 7));
-            dp.selectDate(new Date(2016, 0, 8));
-            dp.selectDate(new Date(2016, 0, 9));
-            dp.selectDate(new Date(2016, 0, 10));
-            dp.selectDate(new Date(2016, 0, 11));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 7));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 8));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 9));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 10));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 11));
 
             expect(dp.selectedDates).to.have.length(3)
         })
@@ -706,8 +706,8 @@ describe('Options', function () {
                 multipleDatesSeparator: ' separator '
             }).data('datepicker');
 
-            dp.selectDate(new Date(2016, 0, 12));
-            dp.selectDate(new Date(2016, 0, 13))
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 12));
+            dp.selectDate(new $.fn.datepicker.PersianDate(2016, 0, 13))
 
             expect($input.val()).to.have.string(' separator ')
         })
@@ -764,7 +764,7 @@ describe('Options', function () {
             }).data('datepicker');
 
             dp.show();
-            dp.selectDate(new Date());
+            dp.selectDate(new $.fn.datepicker.PersianDate());
 
             expect(dp.visible).to.be.equal(false)
 
@@ -776,7 +776,7 @@ describe('Options', function () {
             }).data('datepicker');
 
             dp.show();
-            dp.selectDate(new Date());
+            dp.selectDate(new $.fn.datepicker.PersianDate());
 
             expect(dp.visible).to.be.equal(true)
 
@@ -878,7 +878,7 @@ describe('Options', function () {
 
     describe('dateTimeSeparator', function () {
         it('should define separator between date string and time', function () {
-            var date = new Date(2016,2,9,11,24);
+            var date = new $.fn.datepicker.PersianDate(2016,2,9,11,24);
             dp = $input.datepicker({
                 timepicker: true,
                 onSelect: function (fd, d) {
@@ -894,7 +894,7 @@ describe('Options', function () {
 
     describe('timeFormat', function () {
         it('should define time format', function () {
-            var date = new Date(2016,2,9,9,4);
+            var date = new $.fn.datepicker.PersianDate(2016,2,9,9,4);
             dp = $input.datepicker({
                 timepicker: true,
                 timeFormat: 'h - ii',
@@ -909,7 +909,7 @@ describe('Options', function () {
 
     describe('minHours', function () {
         it('should set minimum hours value', function () {
-            var date = new Date();
+            var date = new $.fn.datepicker.PersianDate();
             date.setHours(9);
             dp = $input.datepicker({
                 timepicker: true,
@@ -925,7 +925,7 @@ describe('Options', function () {
 
     describe('minMinutes', function () {
         it('should set minimum minutes value', function () {
-            var date = new Date();
+            var date = new $.fn.datepicker.PersianDate();
             date.setMinutes(20);
             dp = $input.datepicker({
                 timepicker: true,
@@ -941,7 +941,7 @@ describe('Options', function () {
 
     describe('maxHours', function () {
         it('should set maximum hours value', function () {
-            var date = new Date();
+            var date = new $.fn.datepicker.PersianDate();
             date.setHours(20);
             dp = $input.datepicker({
                 timepicker: true,
@@ -957,7 +957,7 @@ describe('Options', function () {
 
     describe('maxMinutes', function () {
         it('should set maximum minutes value', function () {
-            var date = new Date();
+            var date = new $.fn.datepicker.PersianDate();
             date.setMinutes(50);
             dp = $input.datepicker({
                 timepicker: true,

@@ -29,7 +29,7 @@ var assert = chai.assert,
 
     describe('onSelect', function () {
         it('should add callback when user selects date', function () {
-            var date = new Date(2016,0,13);
+            var date = new $.fn.datepicker.PersianDate(2016,0,13);
 
             dp = $input.datepicker({
                 onSelect: function (fd, d, inst) {
@@ -44,8 +44,8 @@ var assert = chai.assert,
         });
 
         it('should receive array of dates when "multipleDates" set to true', function () {
-            var date = new Date(2016,0,22),
-                date2 = new Date(2016,0,23),
+            var date = new $.fn.datepicker.PersianDate(2016,0,22),
+                date2 = new $.fn.datepicker.PersianDate(2016,0,23),
                 dates = [];
 
             dp = $input.datepicker({
@@ -62,8 +62,8 @@ var assert = chai.assert,
 
         })
         it('should receive array of dates when "range" set to true', function () {
-            var date = new Date(2016,0,22),
-                date2 = new Date(2016,0,23),
+            var date = new $.fn.datepicker.PersianDate(2016,0,22),
+                date2 = new $.fn.datepicker.PersianDate(2016,0,23),
                 dates = [];
 
             dp = $input.datepicker({
@@ -144,7 +144,7 @@ var assert = chai.assert,
             var _month, _year;
 
             dp = $input.datepicker({
-                startDate: new Date(2016, 0, 22),
+                startDate: new $.fn.datepicker.PersianDate(2016, 0, 22),
                 onChangeMonth: function (month, year) {
                     _month = month;
                     _year = year;
@@ -163,7 +163,7 @@ var assert = chai.assert,
             var _year;
 
             dp = $input.datepicker({
-                startDate: new Date(2016, 0, 22),
+                startDate: new $.fn.datepicker.PersianDate(2016, 0, 22),
                 view: 'months',
                 onChangeYear: function (year) {
                     _year = year;
@@ -181,7 +181,7 @@ var assert = chai.assert,
             var _decade;
 
             dp = $input.datepicker({
-                startDate: new Date(2016, 0, 22),
+                startDate: new $.fn.datepicker.PersianDate(2016, 0, 22),
                 view: 'years',
                 onChangeDecade: function (decade) {
                     _decade = decade;

@@ -60,19 +60,19 @@
 
         _getCellContents: function (date, type) {
             var classes = "datepicker--cell datepicker--cell-" + type,
-                currentDate = new Date(),
+                currentDate = new JalaliDate(),
                 parent = this.d,
                 minRange = dp.resetTime(parent.minRange),
                 maxRange = dp.resetTime(parent.maxRange),
                 opts = parent.opts,
                 d = dp.getParsedDate(date),
                 render = {},
-                html = d.date;
+                html = d.jalaliDate;
 
             switch (type) {
                 case 'day':
                     if (parent.isWeekend(d.day)) classes += " -weekend-";
-                    if (d.month != this.d.parsedDate.month) {
+                    if (d.jalaliMonth != this.d.parsedDate.jalaliMonth) {
                         classes += " -other-month-";
                         if (!opts.selectOtherMonths) {
                             classes += " -disabled-";
@@ -147,24 +147,26 @@
          * @private
          */
         _getDaysHtml: function (date) {
-            var totalMonthDays = dp.getDaysCount(date),
-                firstMonthDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay(),
-                lastMonthDay = new Date(date.getFullYear(), date.getMonth(), totalMonthDays).getDay(),
+            var totalMonthDays = dp.getDaysCount(date);
+            jd = JalaliDateUtil.jalaliToGregorian(date.getJalaliFullYear(), date.getJalaliMonth() + 1, 1);
+            jdEnd = JalaliDateUtil.jalaliToGregorian(date.getJalaliFullYear(), date.getJalaliMonth() + 1, totalMonthDays);
+            var firstMonthDay = new JalaliDate(jd[0], jd[1] - 1, jd[2]).getDay(),
+            lastMonthDay = new JalaliDate(jdEnd[0], jdEnd[1] - 1, jdEnd[2]).getDay(),
                 daysFromPevMonth = firstMonthDay - this.d.loc.firstDay,
                 daysFromNextMonth = 6 - lastMonthDay + this.d.loc.firstDay;
-
-            daysFromPevMonth = daysFromPevMonth < 0 ? daysFromPevMonth + 7 : daysFromPevMonth;
+                
+                daysFromPevMonth = daysFromPevMonth < 0 ? daysFromPevMonth + 7 : daysFromPevMonth;
             daysFromNextMonth = daysFromNextMonth > 6 ? daysFromNextMonth - 7 : daysFromNextMonth;
-
+            
             var startDayIndex = -daysFromPevMonth + 1,
-                m, y,
-                html = '';
-
+            m, y,
+            html = '';
+            
             for (var i = startDayIndex, max = totalMonthDays + daysFromNextMonth; i <= max; i++) {
-                y = date.getFullYear();
-                m = date.getMonth();
-
-                html += this._getDayHtml(new Date(y, m, i))
+                jalaliMonth = date.getJalaliMonth();
+                jalaliyear = date.getJalaliFullYear();
+                iJd = JalaliDateUtil.jalaliToGregorian(jalaliyear, jalaliMonth + 1, i);
+                html += this._getDayHtml(new JalaliDate(iJd[0], iJd[1] - 1, iJd[2]))
             }
 
             return html;
@@ -191,7 +193,7 @@
                 i = 0;
 
             while(i < 12) {
-                html += this._getMonthHtml(new Date(d.year, i));
+                html += this._getMonthHtml(new JalaliDate(d.year, i));
                 i++
             }
 
@@ -212,7 +214,7 @@
                 i = firstYear;
 
             for (i; i <= decade[1] + 1; i++) {
-                html += this._getYearHtml(new Date(i , 0));
+                html += this._getYearHtml(new JalaliDate(i , 0));
             }
 
             return html;
@@ -284,11 +286,11 @@
                 dp = this.d;
             // Change view if min view does not reach yet
             if (dp.view != this.opts.minView) {
-                dp.down(new Date(year, month, date));
+                dp.down(new JalaliDate(year, month, date));
                 return;
             }
             // Select date if min view is reached
-            var selectedDate = new Date(year, month, date),
+            var selectedDate = new JalaliDate(year, month, date),
                 alreadySelected = this.d._isSelected(selectedDate, this.d.cellType);
 
             if (!alreadySelected) {
