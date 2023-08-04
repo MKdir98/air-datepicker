@@ -1,16 +1,16 @@
 var gulp = require('gulp'),
     rename = require('gulp-rename'),
-    uglify = require('gulp-uglify'),
+    uglify = require('gulp-uglify-es').default,
     clone = require('gulp-clone'),
     wrap = require('gulp-wrap'),
     concat = require('gulp-concat');
 
 module.exports = function () {
     var stream = gulp.src([
-        'src/js/jalali-date.js',
         'src/js/datepicker.js',
         'src/js/body.js',
         'src/js/navigation.js',
+        'src/js/jalali-date.js',
         'src/js/timepicker.js'
     ])
         .pipe(concat('datepicker.js'))
