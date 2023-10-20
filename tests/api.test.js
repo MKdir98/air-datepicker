@@ -24,7 +24,7 @@ function init(opts) {
 describe('API TESTS', () => {
     describe('selectDate', () => {
         it('should select one passed date', (done) => {
-            let selectedDate = new Date();
+            let selectedDate = new JalaliDate();
             init();
 
             dp.selectDate(selectedDate).then(() => {
@@ -36,7 +36,7 @@ describe('API TESTS', () => {
 
     describe('update', () => {
         test('minDate should be applied after init', () => {
-            let minDate = new Date('2021-10-06');
+            let minDate = new JalaliDate('2021-10-06');
 
             init({
                 startDate: minDate
@@ -80,7 +80,7 @@ describe('API TESTS', () => {
 
             init();
 
-            dp.selectDate(new Date());
+            dp.selectDate(new JalaliDate());
 
             dp.clear().then(() => {
                 expect(dp.selectedDates).toHaveLength(0);
@@ -92,7 +92,7 @@ describe('API TESTS', () => {
             let selected = false;
 
             init({
-                selectedDates: [new Date()],
+                selectedDates: [new JalaliDate()],
                 onSelect() {
                     selected = true;
                 }
@@ -107,7 +107,7 @@ describe('API TESTS', () => {
         it('should reset other date related properties to falsy values', (done) => {
             init();
 
-            dp.selectDate(new Date());
+            dp.selectDate(new JalaliDate());
 
             dp.clear().then(() => {
                 expect(dp.selectedDates).toHaveLength(0);

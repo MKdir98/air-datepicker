@@ -26,7 +26,7 @@ function init(opts) {
 describe('EVENTS TEST', () => {
     describe('onSelect', () => {
         it('should be called when date is selected', (done) => {
-            let selectedDate = new Date();
+            let selectedDate = new JalaliDate();
 
             init();
 
@@ -38,7 +38,7 @@ describe('EVENTS TEST', () => {
         });
 
         it('should be called with fields {date, formattedDate, datepicker}', (done) => {
-            let selectedDate = new Date(),
+            let selectedDate = new JalaliDate(),
                 format = 'dd.MM.yyyy',
                 date,
                 formattedDate,
@@ -65,8 +65,8 @@ describe('EVENTS TEST', () => {
         });
 
         it('should be called with array of dates if range is true', (done) => {
-            let date1 = new Date(),
-                date2 = new Date(date1.getTime() + DAY),
+            let date1 = new JalaliDate(),
+                date2 = new JalaliDate(date1.getTime() + DAY),
                 date,
                 formattedDate;
 
@@ -87,8 +87,8 @@ describe('EVENTS TEST', () => {
         });
 
         it('should be called with array of dates if multipleDates is true', (done) => {
-            let date1 = new Date(),
-                date2 = new Date(date1.getTime() + DAY),
+            let date1 = new JalaliDate(),
+                date2 = new JalaliDate(date1.getTime() + DAY),
                 date,
                 formattedDate;
 
@@ -110,7 +110,7 @@ describe('EVENTS TEST', () => {
         });
 
         it('should be called with single date if multipleDates and range are false', (done) => {
-            let date1 = new Date(),
+            let date1 = new JalaliDate(),
                 date,
                 formattedDate;
 

@@ -5,7 +5,7 @@
     "dev": "set NODE_ENV=development&& webpack",
     "dev:serve": "npm run browser&& set NODE_ENV=development&& webpack serve",
     "prod": "set NODE_ENV=production&& webpack",
-    "browser": "open-cli http://localhost:8080 -- 'chrome' ",
+    "browser": "open-cli http://localhost:8080 -- 'firefox' ",
     "build": "node scripts/build.js",
     "lint-js": "eslint --fix ./src/*.js",
     "test": "jest",

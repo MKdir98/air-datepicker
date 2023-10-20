@@ -1,11 +1,12 @@
 import localeRu from './locale/ru';
 import consts from './consts';
+import JalaliDate from './jalaliDate'
 
 export default {
     classes: '',
     inline: false,
     locale: localeRu,
-    startDate: new Date(),
+    startDate: new JalaliDate(),
     firstDay: '',
     weekends: [6, 0],
     dateFormat: '',

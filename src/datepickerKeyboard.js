@@ -1,5 +1,6 @@
 import consts from './consts';
 import {getParsedDate, getDaysCount} from './utils';
+import JalaliDate from './jalaliDate'
 
 export default class DatepickerKeyboard {
     pressedKeys = new Set();
@@ -50,13 +51,13 @@ export default class DatepickerKeyboard {
         if (!potentialFocused) {
             switch (currentView) {
                 case consts.days:
-                    potentialFocused = new Date(year, month, new Date().getDate());
+                    potentialFocused = new JalaliDate(year, month, new JalaliDate().getDate());
                     break;
                 case consts.months:
-                    potentialFocused = new Date(year, month, 1);
+                    potentialFocused = new JalaliDate(year, month, 1);
                     break;
                 case consts.years:
-                    potentialFocused = new Date(year, 0, 1);
+                    potentialFocused = new JalaliDate(year, 0, 1);
                     break;
             }
         }
@@ -96,7 +97,7 @@ export default class DatepickerKeyboard {
                 break;
         }
 
-        let newFocusedDate = this.dp.getClampedDate(new Date(y, m, d));
+        let newFocusedDate = this.dp.getClampedDate(new JalaliDate(y, m, d));
         this.dp.setFocusDate(newFocusedDate, {viewDateTransition: true});
     }
 
@@ -116,13 +117,13 @@ export default class DatepickerKeyboard {
 
         let {year, month, date} = dateParts;
 
-        let totalDaysInNextMonth = getDaysCount(new Date(year, month));
+        let totalDaysInNextMonth = getDaysCount(new JalaliDate(year, month));
 
         if (totalDaysInNextMonth < date) {
             date = totalDaysInNextMonth;
         }
 
-        let newFocusedDate = this.dp.getClampedDate(new Date(year, month, date));
+        let newFocusedDate = this.dp.getClampedDate(new JalaliDate(year, month, date));
 
         this.dp.setFocusDate(newFocusedDate, {viewDateTransition: true});
     }

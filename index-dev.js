@@ -10,8 +10,9 @@ let $bntDestroy = document.querySelector('#destroy');
 let $btnAction = document.querySelector('#action');
 let $btnUpdate = document.querySelector('#update');
 import anime from 'animejs';
+import JalaliDate from './src/jalaliDate'
 
-let mDate = new Date();
+let mDate = new JalaliDate();
 let selected = false;
 
 let opts = {
@@ -33,12 +34,12 @@ let opts = {
     // position: 'right center',
     // position: manualPosition,
     // classes: '-anime-',
-    // selectedDates: [new Date()],
+    // selectedDates: [new JalaliDate()],
     onChangeView(view) {
         // console.log(dp1.getCell('2021-01-01', 'month'))
     },
 
-    selectedDates: [new Date()],
+    selectedDates: [new JalaliDate()],
     onSelect({date, formattedDate, datepicker}) {
         selected = true;
         console.log('on select');
@@ -52,7 +53,7 @@ let opts = {
             days = 31;
 
         while(days) {
-            let date = new Date(year, month, days);
+            let date = new JalaliDate(year, month, days);
 
             if (date.getDay() === dayIndex) {
                 selected.push(date)
@@ -144,7 +145,7 @@ window.dp1 = new Datepicker($input1, opts);
 $bntDestroy.addEventListener('click', dp1.destroy)
 
 
-let dates = [new Date(), new Date('2021-06-10'), new Date('2021-06-15')];
+let dates = [new JalaliDate(), new JalaliDate('2021-06-10'), new JalaliDate('2021-06-15')];
 let toggle = true;
 $btnUpdate.addEventListener('click', () => {
     dp1.update({
@@ -152,8 +153,8 @@ $btnUpdate.addEventListener('click', () => {
         // view: 'years',
         // prevHtml: 'prev',
         // range: !dp.opts.range,
-        // minDate: new Date(),
-        // maxDate: new Date('2021-06-27'),
+        // minDate: new JalaliDate(),
+        // maxDate: new JalaliDate('2021-06-27'),
         locale: en,
         buttons: ['today'],
         selectedDates: dates[Math.floor(Math.random() * dates.length -1)],
@@ -163,7 +164,7 @@ $btnUpdate.addEventListener('click', () => {
 })
 
 $btnAction.addEventListener('click', () => {
-    dp1.selectDate(new Date(), {silent: true});
+    dp1.selectDate(new JalaliDate(), {silent: true});
 });
 
 if (module.hot) {

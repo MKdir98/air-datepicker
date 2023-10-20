@@ -71,7 +71,7 @@ function Docs({} = {}) {
                                         <Code>{examples.optsLocaleBasic}</Code>
                                     </Example>
                                 </Param>
-                                <Param name='startDate' type='Date | string | number' defaultValue='new Date()'>
+                                <Param name='startDate' type='Date | string | number' defaultValue='new JalaliDate()'>
                                     <Paragraph id='optsStartDate'/>
                                 </Param>
                                 <Param name='firstDay' type='number'>
@@ -177,8 +177,8 @@ function Docs({} = {}) {
                                         <AirDatepicker
                                             inline
                                             multipleDates
-                                            startDate={new Date('2021-07-20')}
-                                            selectedDates={[[new Date('2021-07-20'), '2021-07-25', 1626307200000]]}
+                                            startDate={new JalaliDate('2021-07-20')}
+                                            selectedDates={[[new JalaliDate('2021-07-20'), '2021-07-25', 1626307200000]]}
                                         />
                                         <Code>{examples.optsSelectedDatesExample}</Code>
                                     </Example>
@@ -311,7 +311,7 @@ function Docs({} = {}) {
                                                 {
                                                     content: 'Select 2021-07-26',
                                                     onClick: (dp) => {
-                                                        let date = new Date('2021-07-26');
+                                                        let date = new JalaliDate('2021-07-26');
                                                         dp.selectDate(date);
                                                         dp.setViewDate(date);
                                                     }

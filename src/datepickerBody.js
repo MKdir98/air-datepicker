@@ -14,6 +14,7 @@ import {
     subDays,
 } from './utils';
 import DatepickerCell from './datepickerCell';
+import JalaliDate from './jalaliDate'
 
 import './datepickerBody.scss';
 
@@ -307,8 +308,8 @@ export default class DatepickerBody {
         let {viewDate, locale: {firstDay}} = dp,
             totalMonthDays = getDaysCount(viewDate),
             {year, month} = getParsedDate(viewDate),
-            firstMonthDay = new Date(year, month, 1),
-            lastMonthDay = new Date(year, month, totalMonthDays),
+            firstMonthDay = new JalaliDate(year, month, 1),
+            lastMonthDay = new JalaliDate(year, month, totalMonthDays),
             daysFromPrevMonth = firstMonthDay.getDay() - firstDay,
             daysFromNextMonth = 6 - lastMonthDay.getDay() + firstDay;
 
@@ -324,7 +325,7 @@ export default class DatepickerBody {
         const dates = [];
 
         while (i < totalRenderDays) {
-            let date = new Date(renderYear, renderMonth, firstRenderDayDate + i);
+            let date = new JalaliDate(renderYear, renderMonth, firstRenderDayDate + i);
             if (cb) {
                 cb(date);
             }
@@ -342,7 +343,7 @@ export default class DatepickerBody {
             dates = [];
 
         while (currentMonth < totalMonths) {
-            const date = new Date(year, currentMonth);
+            const date = new JalaliDate(year, currentMonth);
             dates.push(date);
             if (cb) {
                 cb(date);
@@ -361,7 +362,7 @@ export default class DatepickerBody {
             dates = [];
 
         while (year <= lastYear) {
-            const date = new Date(year, 0);
+            const date = new JalaliDate(year, 0);
             dates.push(date);
             if (cb) {
                 cb(date);

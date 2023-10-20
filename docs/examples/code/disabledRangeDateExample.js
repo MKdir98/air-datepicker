@@ -4,7 +4,7 @@ export const disabledRangeDateExample = (msg) =>
 import isWithinInterval  from 'date-fns/isWithinInterval';
 import isEqual  from 'date-fns/isEqual';
 
-const disabledDate = new Date('2023-07-13T00:00:00');
+const disabledDate = new JalaliDate('2023-07-13T00:00:00');
 
 // ${msg.exampleRangeDisabledComment}
 const isDisabledDateIsInRange = ({date, datepicker}) => {

@@ -47,7 +47,7 @@ describe('OPTIONS TESTS', () => {
     describe('locale', () => {
         it('should change locale to "en"', () => {
             init({locale: en});
-            let currentMonthName = en.months[new Date().getMonth()];
+            let currentMonthName = en.months[new JalaliDate().getMonth()];
             let $navMonth = $datepicker.querySelector('.air-datepicker-nav--title');
 
             expect($navMonth).toHaveTextContent(currentMonthName);
@@ -77,7 +77,7 @@ describe('OPTIONS TESTS', () => {
 
     describe('startDate', () => {
         it('should change start date', () => {
-            let startDate = new Date('2021-02-04');
+            let startDate = new JalaliDate('2021-02-04');
             init({startDate});
 
             let $navMonth = $datepicker.querySelector('.air-datepicker-nav--title');
@@ -116,7 +116,7 @@ describe('OPTIONS TESTS', () => {
 
 
     describe('dateFormat', () => {
-        let date = new Date('2021-04-28T23:05'),
+        let date = new JalaliDate('2021-04-28T23:05'),
             values = {
                 'T': date.getTime().toString(),
                 'aa': 'pm',
@@ -158,7 +158,7 @@ describe('OPTIONS TESTS', () => {
                 dateFormat: 'Month is MMMM'
             });
 
-            dp.selectDate(new Date(2016, 2, 1)).then(() => {
+            dp.selectDate(new JalaliDate(2016, 2, 1)).then(() => {
                 expect(dp.$el.value).toEqual('Month is März');
                 done();
             });
@@ -171,7 +171,7 @@ describe('OPTIONS TESTS', () => {
                 }
             });
 
-            dp.selectDate(new Date()).then(() => {
+            dp.selectDate(new JalaliDate()).then(() => {
                 expect(dp.$el.value).toEqual('custom format');
                 done();
             });
@@ -185,7 +185,7 @@ describe('OPTIONS TESTS', () => {
                 altField: $altInput,
             });
 
-            let date = new Date();
+            let date = new JalaliDate();
             dp.selectDate(date).then(() => {
                 expect($altInput.value).toEqual(date.getTime().toString());
                 done();
@@ -200,7 +200,7 @@ describe('OPTIONS TESTS', () => {
                 altFieldDateFormat: 'MMMM'
             });
 
-            let date = new Date();
+            let date = new JalaliDate();
             dp.selectDate(date).then(() => {
                 expect($altInput.value).toEqual(dp.locale.months[date.getMonth()]);
                 done();
@@ -210,7 +210,7 @@ describe('OPTIONS TESTS', () => {
 
     describe('toggleSelected', () => {
         it('should remove selection from active date when clicked', function () {
-            let date = new Date();
+            let date = new JalaliDate();
 
             init({
                 toggleSelected: true
@@ -223,7 +223,7 @@ describe('OPTIONS TESTS', () => {
         });
 
         it('should not remove selection from active date when clicked', function () {
-            let date = new Date();
+            let date = new JalaliDate();
 
             init({
                 toggleSelected: false
@@ -236,7 +236,7 @@ describe('OPTIONS TESTS', () => {
         });
 
         it('should receive correct arguments if it is a function', function (done) {
-            let date = new Date();
+            let date = new JalaliDate();
 
             init({
                 toggleSelected: ({datepicker, date}) => {
@@ -252,7 +252,7 @@ describe('OPTIONS TESTS', () => {
         });
 
         it('should handle option as function correctly', function () {
-            let date = new Date();
+            let date = new JalaliDate();
 
             init({
                 toggleSelected: () => {
@@ -271,61 +271,61 @@ describe('OPTIONS TESTS', () => {
         var year = 2015,
             month = 10,
             day = 18,
-            date = new Date(year, month, day),
+            date = new JalaliDate(year, month, day),
             cases = [
                 {
                     description: '→: should focus next cell',
                     which: 39,
                     keys: 'ArrowRight',
-                    validDate: new Date(year, month, day + 1)
+                    validDate: new JalaliDate(year, month, day + 1)
                 },
                 {
                     description: '←: should focus previous cell',
                     which: 37,
                     keys: 'ArrowLeft',
-                    validDate: new Date(year, month, day - 1)
+                    validDate: new JalaliDate(year, month, day - 1)
                 },
                 {
                     description: '↑: should focus -7 day cell',
                     which: 38,
                     keys: 'ArrowUp',
-                    validDate: new Date(year, month, day - 7)
+                    validDate: new JalaliDate(year, month, day - 7)
                 },
                 {
                     description: '↓: should focus +7 day cell',
                     which: 40,
                     keys: 'ArrowDown',
-                    validDate: new Date(year, month, day + 7)
+                    validDate: new JalaliDate(year, month, day + 7)
                 },
                 {
                     description: 'Ctrl + →: should focus next month',
                     keys: ['Control', 'ArrowRight'],
-                    validDate: new Date(year, month + 1, day)
+                    validDate: new JalaliDate(year, month + 1, day)
                 },
                 {
                     description: 'Ctrl + ←: should focus previous month',
                     keys: ['Control', 'ArrowLeft'],
-                    validDate: new Date(year, month - 1, day)
+                    validDate: new JalaliDate(year, month - 1, day)
                 },
                 {
                     description: 'Shift + →: should focus next year',
                     keys: ['Shift', 'ArrowRight'],
-                    validDate: new Date(year + 1, month, day)
+                    validDate: new JalaliDate(year + 1, month, day)
                 },
                 {
                     description: 'Shift + ←: should focus previous year',
                     keys: ['Shift', 'ArrowLeft'],
-                    validDate: new Date(year - 1, month, day)
+                    validDate: new JalaliDate(year - 1, month, day)
                 },
                 {
                     description: 'Alt + →: should focus on +10 year cell',
                     keys: ['Alt', 'ArrowRight'],
-                    validDate: new Date(year + 10, month, day)
+                    validDate: new JalaliDate(year + 10, month, day)
                 },
                 {
                     description: 'Alt + ←: should focus on -10 year cell',
                     keys: ['Alt', 'ArrowLeft'],
-                    validDate: new Date(year - 10, month, day)
+                    validDate: new JalaliDate(year - 10, month, day)
                 },
                 {
                     description: 'Ctrl + Shift + ↑: should change view to months',
@@ -378,21 +378,21 @@ describe('OPTIONS TESTS', () => {
     describe('minDate', () => {
         test('"prev" button should be available', () => {
             init({
-                startDate: new Date('2021-07-27'),
-                minDate: new Date('2021-06-27'),
+                startDate: new JalaliDate('2021-07-27'),
+                minDate: new JalaliDate('2021-06-27'),
             });
 
             expect($datepicker.querySelector('[data-action="prev"]')).not.toHaveClass('-disabled-');
         });
         test('"prev" buttons should be availabel if minDate is in past year', () => {
             init({
-                minDate: new Date('2020-12-31'),
+                minDate: new JalaliDate('2020-12-31'),
             });
 
             expect($datepicker.querySelector('[data-action="prev"]')).not.toHaveClass('-disabled-');
         });
         test('"prev" button should be disabled in months view', () => {
-            let minDate = new Date('2021-06-27');
+            let minDate = new JalaliDate('2021-06-27');
 
             init({
                 startDate: minDate,
@@ -405,7 +405,7 @@ describe('OPTIONS TESTS', () => {
 
         it('should not disable month which contains minDate', () => {
             let year = 2021;
-            let minDate = new Date(`${year}-06-30`);
+            let minDate = new JalaliDate(`${year}-06-30`);
 
             init({
                 startDate: minDate,
@@ -420,7 +420,7 @@ describe('OPTIONS TESTS', () => {
 
         it('should not disable day which is equal to minDate', () => {
             let year = 2021;
-            let minDate = new Date(`${year}-06-30`);
+            let minDate = new JalaliDate(`${year}-06-30`);
 
             init({
                 startDate: minDate,
@@ -434,8 +434,8 @@ describe('OPTIONS TESTS', () => {
 
         it('should not disable months before min date in next year', () => {
             let year = 2021;
-            let minDate = new Date(`${year}-06-30`);
-            let startDate = new Date(minDate.getTime());
+            let minDate = new JalaliDate(`${year}-06-30`);
+            let startDate = new JalaliDate(minDate.getTime());
 
             startDate.setFullYear(2022);
             startDate.setMonth(0);
@@ -484,7 +484,7 @@ describe('OPTIONS TESTS', () => {
         it('should be inited without errors with selected date', () => {
             expect(() => {
                 init({
-                    selectedDates: [new Date()],
+                    selectedDates: [new JalaliDate()],
                     visible: false,
                     autoClose: true
                 });
@@ -496,7 +496,7 @@ describe('OPTIONS TESTS', () => {
                 autoClose: true
             });
 
-            dp.selectDate(new Date());
+            dp.selectDate(new JalaliDate());
 
             expect(dp.visible).toBe(false);
         });
@@ -507,8 +507,8 @@ describe('OPTIONS TESTS', () => {
                 range: true,
             });
 
-            let date1 = new Date();
-            let date2 = new Date(date1.getTime() + DAY);
+            let date1 = new JalaliDate();
+            let date2 = new JalaliDate(date1.getTime() + DAY);
 
             dp.selectDate(date1);
             dp.selectDate(date2);
@@ -601,7 +601,7 @@ describe('OPTIONS TESTS', () => {
 
     describe('selectedDates', () => {
         it('should select dates on init', async (done) => {
-            const date = new Date('2022-12-08');
+            const date = new JalaliDate('2022-12-08');
             init({
                 visible: false,
                 selectedDates: [date]
@@ -617,7 +617,7 @@ describe('OPTIONS TESTS', () => {
         });
 
         it('should select dates with time on init with correct day period', async () => {
-            const date = new Date('2022-12-08 23:21');
+            const date = new JalaliDate('2022-12-08 23:21');
             init({
                 visible: false,
                 timepicker: true,
@@ -632,7 +632,7 @@ describe('OPTIONS TESTS', () => {
 
     describe('onBeforeSelect', () => {
         it('should receive correct arguments', (done) => {
-            const selectedDate = new Date('2023-07-18');
+            const selectedDate = new JalaliDate('2023-07-18');
             init({
                 visible: true,
                 onBeforeSelect({date, datepicker}) {
@@ -645,7 +645,7 @@ describe('OPTIONS TESTS', () => {
             dp.selectDate(selectedDate);
         });
         it('should disable date selection if returns false', (done) => {
-            const selectedDate = new Date('2023-07-18');
+            const selectedDate = new JalaliDate('2023-07-18');
             init({
                 visible: true,
                 onBeforeSelect({date}) {
@@ -660,7 +660,7 @@ describe('OPTIONS TESTS', () => {
         });
 
         it('should enable date selection if returns true', (done) => {
-            const selectedDate = new Date('2023-07-18');
+            const selectedDate = new JalaliDate('2023-07-18');
             init({
                 visible: true,
                 onBeforeSelect({date}) {
@@ -678,7 +678,7 @@ describe('OPTIONS TESTS', () => {
 
     describe('onFocus', () => {
         it('should receive correct arguments', (done) => {
-            const selectedDate = new Date('2023-07-18');
+            const selectedDate = new JalaliDate('2023-07-18');
             init({
                 visible: true,
                 onFocus({date, datepicker}) {
@@ -691,7 +691,7 @@ describe('OPTIONS TESTS', () => {
             dp.setFocusDate(selectedDate);
         });
         it('should be triggered when focusing cell', (done) => {
-            const selectedDate = new Date('2023-07-18');
+            const selectedDate = new JalaliDate('2023-07-18');
             init({
                 visible: true,
                 onFocus({date}) {

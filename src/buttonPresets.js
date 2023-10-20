@@ -1,7 +1,9 @@
+import JalaliDate from './jalaliDate'
+
 export default {
     today: {
         content: dp => dp.locale.today,
-        onClick: dp => dp.setViewDate(new Date()),
+        onClick: dp => dp.setViewDate(new JalaliDate()),
     },
     clear: {
         content: dp => dp.locale.clear,

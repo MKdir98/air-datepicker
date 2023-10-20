@@ -29,7 +29,7 @@ const PopperLink = () => {
 export default function Examples() {
     let [minDate, setMinDate] = useState();
     let [maxDate, setMaxDate] = useState();
-    let today = new Date();
+    let today = new JalaliDate();
     let {messages} = useIntl();
     let {pageTitle} = usePageTitle('navExamples');
 
@@ -82,7 +82,7 @@ export default function Examples() {
                                     }}
                                 />
                                 <Example>
-                                    <AirDatepicker inline selectedDates={[new Date()]}/>
+                                    <AirDatepicker inline selectedDates={[new JalaliDate()]}/>
                                     <Code>{code.basicSelectedDate}</Code>
                                 </Example>
                             </Section.SubSection>
@@ -366,7 +366,7 @@ export default function Examples() {
                                 <Example>
                                     <AirDatepicker
                                         timepicker
-                                        selectedDates={new Date()}
+                                        selectedDates={new JalaliDate()}
                                         timeFormat={'hh:mm AA'}
                                         readonly
                                     />
@@ -414,7 +414,7 @@ export default function Examples() {
                             <Example>
                                 <AirDatepicker
                                     inline
-                                    selectedDates={new Date(today.getFullYear(), today.getMonth(), 10)}
+                                    selectedDates={new JalaliDate(today.getFullYear(), today.getMonth(), 10)}
                                     onRenderCell={({date, cellType}) => {
                                         let dates = [1, 5, 7, 10, 15, 20, 25],
                                             emoji = ['💕', '😃', '🍙', '🍣', '🍻', '🎉', '🥁'],
@@ -491,7 +491,7 @@ export default function Examples() {
                                 <Example>
                                     <AirDatepicker
                                         inlineInput
-                                        selectedDates={[new Date()]}
+                                        selectedDates={[new JalaliDate()]}
                                         buttons={[
                                             {
                                                 content(dp) {
@@ -501,7 +501,7 @@ export default function Examples() {
                                                 },
                                                 onClick(dp) {
                                                     let viewDate = dp.viewDate;
-                                                    let today = new Date();
+                                                    let today = new JalaliDate();
 
                                                     viewDate.setHours(today.getHours());
                                                     viewDate.setMinutes(today.getMinutes());

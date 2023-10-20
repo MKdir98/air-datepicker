@@ -3,7 +3,7 @@ import isWithinInterval  from 'date-fns/isWithinInterval';
 import isEqual  from 'date-fns/isEqual';
 import {useCallback} from 'react';
 
-const disabledDate = new Date('2023-07-13T00:00:00');
+const disabledDate = new JalaliDate('2023-07-13T00:00:00');
 const isDateBetweenRange = ({date, datepicker}) => {
     const selectedDate = datepicker.selectedDates[0];
     if (selectedDate && datepicker.selectedDates.length === 1) {

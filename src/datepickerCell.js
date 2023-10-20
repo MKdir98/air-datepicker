@@ -10,6 +10,7 @@ import {
 } from './utils';
 
 import './datepickerCell.scss';
+import JalaliDate from './jalaliDate'
 
 export default class DatepickerCell {
     constructor({type, date, dp, opts, body} = {}) {
@@ -72,7 +73,7 @@ export default class DatepickerCell {
     }
 
     _getClassName() {
-        let currentDate = new Date();
+        let currentDate = new JalaliDate();
         let {selectOtherMonths, selectOtherYears} = this.opts;
         let {minDate, maxDate} = this.dp;
         let {day} = getParsedDate(this.date);
@@ -143,10 +144,10 @@ export default class DatepickerCell {
         //to be able to mark cell as disabled correctly
         //Same goes to year cells
         let cellMinDate = minDate
-            ? new Date(year, isYear ? minDate.getMonth() : month, isDay ? date : minDate.getDate())
+            ? new JalaliDate(year, isYear ? minDate.getMonth() : month, isDay ? date : minDate.getDate())
             : false;
         let cellMaxDate = maxDate
-            ? new Date(year, isYear ? maxDate.getMonth() : month, isDay ? date : maxDate.getDate())
+            ? new JalaliDate(year, isYear ? maxDate.getMonth() : month, isDay ? date : maxDate.getDate())
             : false;
 
         if (minDate && maxDate) {

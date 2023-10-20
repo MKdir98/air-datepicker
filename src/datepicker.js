@@ -21,6 +21,7 @@ import DatepickerTime from './datepickerTime';
 import DatepickerKeyboard from './datepickerKeyboard';
 import withEvents from './withEvents';
 import consts from './consts';
+import JalaliDate from './jalaliDate'
 
 import './datepickerVars.scss';
 import './datepicker.scss';
@@ -57,7 +58,7 @@ export default class Datepicker {
         let {view, startDate} = this.opts;
 
         if (!startDate) {
-            this.opts.startDate = new Date();
+            this.opts.startDate = new JalaliDate();
         }
 
         if (this.$el.nodeName === 'INPUT') {
@@ -416,13 +417,13 @@ export default class Datepicker {
 
         switch (this.currentView) {
             case consts.days:
-                this.setViewDate(new Date(year, month + 1, 1));
+                this.setViewDate(new JalaliDate(year, month + 1, 1));
                 break;
             case consts.months:
-                this.setViewDate(new Date(year + 1, month, 1));
+                this.setViewDate(new JalaliDate(year + 1, month, 1));
                 break;
             case consts.years:
-                this.setViewDate(new Date(year + 10, 0, 1));
+                this.setViewDate(new JalaliDate(year + 10, 0, 1));
                 break;
         }
     }
@@ -435,13 +436,13 @@ export default class Datepicker {
 
         switch (this.currentView) {
             case consts.days:
-                this.setViewDate(new Date(year, month - 1, 1));
+                this.setViewDate(new JalaliDate(year, month - 1, 1));
                 break;
             case consts.months:
-                this.setViewDate(new Date(year - 1, month, 1));
+                this.setViewDate(new JalaliDate(year - 1, month, 1));
                 break;
             case consts.years:
-                this.setViewDate(new Date(year - 10, 0, 1));
+                this.setViewDate(new JalaliDate(year - 10, 0, 1));
                 break;
         }
     }
@@ -461,7 +462,7 @@ export default class Datepicker {
      * @param {boolean} [params.updateTime] - should update timepicker's time from passed date
      * @param {boolean} [params.silent] - if true, then onChange event wont be triggered
      * @return {Promise<unknown>} - returns promise, since input value updates asynchronously, after promise resolves, we need a promise tobe able to get current input value
-     * @example selectDate(new Date()).then(() => {console.log(dp.$el.value)})
+     * @example selectDate(new JalaliDate()).then(() => {console.log(dp.$el.value)})
      */
     selectDate(date, params = {}) {
         let {currentView, parsedViewDate, selectedDates} = this;
@@ -499,13 +500,13 @@ export default class Datepicker {
         // If so, change `viewDate`
         if (currentView === consts.days) {
             if (date.getMonth() !== parsedViewDate.month && moveToOtherMonthsOnSelect) {
-                newViewDate = new Date(date.getFullYear(), date.getMonth(), 1);
+                newViewDate = new JalaliDate(date.getFullYear(), date.getMonth(), 1);
             }
         }
 
         if (currentView === consts.years) {
             if (date.getFullYear() !== parsedViewDate.year && moveToOtherYearsOnSelect) {
-                newViewDate = new Date(date.getFullYear(), 0, 1);
+                newViewDate = new JalaliDate(date.getFullYear(), 0, 1);
             }
         }
 
@@ -908,7 +909,7 @@ export default class Datepicker {
         if (nextView > maxViewIndex) nextView = maxViewIndex;
         if (nextView < minViewIndex) nextView = minViewIndex;
 
-        this.setViewDate(new Date(date.getFullYear(), date.getMonth(), 1));
+        this.setViewDate(new JalaliDate(date.getFullYear(), date.getMonth(), 1));
         this.setCurrentView(this.viewIndexes[nextView]);
     }
 
@@ -1236,7 +1237,7 @@ export default class Datepicker {
     }
 
     _onChangeTime = ({hours, minutes}) => {
-        let today = new Date();
+        let today = new JalaliDate();
         let {lastSelectedDate, opts: {onSelect}} = this;
         let targetDate = lastSelectedDate;
 

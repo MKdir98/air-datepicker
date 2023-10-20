@@ -21,7 +21,7 @@ new AirDatepicker('#input', {
 
 export let basicSelectedDate =
 `new AirDatepicker('#el', {
-    selectedDates: [new Date()]
+    selectedDates: [new JalaliDate()]
 })`;
 
 export let basicMinView =
@@ -79,7 +79,7 @@ export let timeFormatOption =
 `
 
 let customCellExample =
-`let today = new Date();
+`let today = new JalaliDate();
 
 new AirDatepicker('#inline-div', {
     // Handle render process
@@ -101,7 +101,7 @@ new AirDatepicker('#inline-div', {
     },
     
     // Select 10th day of the month
-    selectedDates: new Date(today.getFullYear(), today.getMonth(), 10)
+    selectedDates: new JalaliDate(today.getFullYear(), today.getMonth(), 10)
 });
 `
 let customCellExampleCss =
@@ -159,7 +159,7 @@ new AirDatepicker('#el', {
 export let optsSelectedDatesExample =
 `import AirDatepicker from 'air-datepicker';
 
-let startDate = new Date('2021-07-20');
+let startDate = new JalaliDate('2021-07-20');
 
 new AirDatepicker('#el', {
     startDate,
@@ -205,7 +205,7 @@ export let exampleButtonsAdvance = (messages) =>
             },
             onClick(dp) {
                 let viewDate = dp.viewDate;
-                let today = new Date();
+                let today = new JalaliDate();
                 
                 // Since timepicker takes initial time from 'viewDate', set up time here, 
                 // otherwise time will be equal to 00:00 if user navigated through datepicker
@@ -228,7 +228,7 @@ let button = {
     content: 'Select 2021-07-26',
     className: 'custom-button-classname',
     onClick: (dp) => {
-        let date = new Date('2021-07-26');
+        let date = new JalaliDate('2021-07-26');
         dp.selectDate(date);
         dp.setViewDate(date);
     }
