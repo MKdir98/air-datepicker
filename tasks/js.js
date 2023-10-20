@@ -7,10 +7,10 @@ var gulp = require('gulp'),
 
 module.exports = function () {
     var stream = gulp.src([
+        'src/js/jalali-date.js',
         'src/js/datepicker.js',
         'src/js/body.js',
         'src/js/navigation.js',
-        'src/js/jalali-date.js',
         'src/js/timepicker.js'
     ])
         .pipe(concat('datepicker.js'))

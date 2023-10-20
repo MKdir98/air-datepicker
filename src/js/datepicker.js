@@ -115,6 +115,9 @@
 
         if (!this.opts.startDate) {
             this.opts.startDate = new JalaliDate();
+        } else {
+            this.opts.startDate = new JalaliDate(this.opts.startDate.getFullYear(),
+             this.opts.startDate.getMonth(), this.opts.startDate.getDate());
         }
 
         if (this.el.nodeName == 'INPUT') {
